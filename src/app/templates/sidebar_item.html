@@ -1,8 +1,10 @@
-<div id="project_<%=id%>" data-id="<%=id%>" class="JS-Sidebar-Item sidebar__item">
-    <div class="sidebar__name">
-        <%=name %>
-    </div>
-    <div class="controls animation">
-        <a href="javascript:" class="JS-Project-Remove controls__item controls__item_remove" data-id="<%=id%>" title="Remove"></a>
-    </div>
+<div id="project_<%=id%>" data-id="<%=id%>" class="JS-Sidebar-Item sidebar-item">
+	<div class="sidebar-name">
+		<%=name %>
+	</div>
+	<div class="controls">
+		<button class="JS-Project-Remove controls-item controls-item_remove" data-id="<%=id%>" title="Remove">
+			<span class="icon-remove"></span>
+		</button>
+	</div>
 </div>

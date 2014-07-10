@@ -1,124 +1,119 @@
-var TmTSpock = (function () {
+(function(){
 
-    function TmTSpock() {
+	var TmTSpock = function()
+	{
+		var self = this;
+		if (spock.projectManager.projects.length > 0)
+		{
+			_.each(spock.projectManager.projects, function(project){
+				self.addProjectHTML(project);
+				self.switchProject(project.id);
 
-        var self = this;
+			});
+		}
+	};
 
-        if (spock.projectManager.projects.length > 0) {
-            _.each(spock.projectManager.projects, function (project) {
+	var p = TmTSpock.prototype;
 
-                self.addProjectHTML(project);
-                self.switchProject(project.id);
+	p.addProject = function (dir)
+	{
+		var self = this;
+		spock.projectManager.add(dir, function (project){
+			self.addProjectHTML(project);
+			self.switchProject(project.id);
+		});
 
-            });
-        }
+	};
 
-    }
+	p.addProjectHTML = function (project)
+	{
+		var project_html = spock.util.getTemplate('sidebar_item', project);
+		$(project_html).appendTo($('.sidebar-list'));
 
-    TmTSpock.prototype.addProject = function (dir) {
-
-        var self = this;
-
-        spock.projectManager.add(dir, function (project) {
-            self.addProjectHTML(project);
-            self.switchProject(project.id);
-        });
-
-    };
-
-    TmTSpock.prototype.addProjectHTML = function (project) {
-
-        //加入HTML
-        var project_html = spock.util.getTemplate('sidebar_item', project);
-        $(project_html).appendTo($('.sidebar__list'));
-
-        var tasks_html = spock.util.getTemplate('tasks', project);
-        $(tasks_html).appendTo($('.task-tab'));
-
-    };
+		var tasks_html = spock.util.getTemplate('tasks', project);
+		$(tasks_html).appendTo($('.task-tab'));
+	};
 
 
-    TmTSpock.prototype.switchProject = function (id) {
-        $('.sidebar__item_current').removeClass('sidebar__item_current');
-        $('#project_' + id).addClass('sidebar__item_current');
+	p.switchProject = function (id)
+	{
+		$('.sidebar-item_current').removeClass('sidebar-item_current');
+		$('#project_' + id).addClass('sidebar-item_current');
 
-        $('.task-list').hide();
-        $('#tasks_' + id).show();
-    };
+		$('.tasks').hide();
+		$('#tasks_' + id).show();
+	};
 
-    TmTSpock.prototype.removeProject = function (id) {
+	p.removeProject = function (id)
+	{
+		spock.projectManager.remove(id);
 
-        spock.projectManager.remove(id);
+		$('#project_' + id).remove();
+		$('#tasks_' + id).remove();
 
-        $('#project_' + id).remove();
-        $('#tasks_' + id).remove();
+		if ($('.sidebar-item_current').length == 0 && spock.projectManager.projects.length > 0)
+		{
+			this.switchProject(spock.projectManager.projects[0].id);
+		}
+	};
 
-        if ($('.sidebar__item_current').length == 0 && spock.projectManager.projects.length > 0) {
-            this.switchProject(spock.projectManager.projects[0].id);
-        }
+	p.putCliLog = function(data, project_id, task_name)
+	{
+		var output = ansi2html(data);
+		$('<p>' + output + '</p>').appendTo($('#console_' + project_id + "_" + task_name));
+		this.terminalScrollToBottom(project_id, task_name);
+	};
 
-    };
+	p.terminalScrollToBottom = function(project_id, task_name)
+	{
+		_.throttle(function(){
+			$('#console_' + project_id + "_" + task_name).scrollTop(999999999);
+		}, 100)();
+	};
 
-    TmTSpock.prototype.putCliLog = function (data, project_id, task_name) {
+	p.runTask = function(project_id, task_name)
+	{
+		spock.terminalManager.runTask(project_id, task_name, function(){
+			//start event
+			$('#task_item_' + project_id + "_" + task_name).addClass('tasks-item_running');
+			$('#task_item_' + project_id + "_" + task_name).removeClass('tasks-item_error');
 
-        var output = ansi2html(data);
-        $('<p>' + output + '</p>').appendTo($('#console_' + project_id + "_" + task_name));
-        this.terminalScrollToBottom(project_id, task_name);
-    };
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_terminal").show();
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_stop").show();
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_run").hide();
+		}, function(){
+			//end event
 
-    TmTSpock.prototype.terminalScrollToBottom = function (project_id, task_name) {
-        _.throttle(function () {
-            $('#console_' + project_id + "_" + task_name).scrollTop(999999999);
-        }, 100)();
-    };
+			$('#task_item_' + project_id + "_" + task_name).removeClass('tasks-item_running');
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_terminal").hide();
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_stop").hide();
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_run").show();
 
-    TmTSpock.prototype.runTask = function (project_id, task_name) {
-        spock.terminalManager.runTask(project_id, task_name, function () {
-            //start event
-            $('#task_item_' + project_id + "_" + task_name).addClass('task-list__item_running');
-            $('#task_item_' + project_id + "_" + task_name).removeClass('task-list__item_error');
+		}, function(){
+			//error event
+			$('#task_item_' + project_id + "_" + task_name).addClass('tasks-item_error');
 
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_terminal").show();
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_stop").show();
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_run").hide();
-        }, function () {
-            //end event
+			$('#task_item_' + project_id + "_" + task_name).removeClass('tasks-item_running');
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_terminal").hide();
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_stop").hide();
+			$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_run").show();
 
-            $('#task_item_' + project_id + "_" + task_name).removeClass('task-list__item_running');
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_terminal").hide();
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_stop").hide();
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_run").show();
+		});
+	};
 
-            //$(___).appendTo($('#console_' + project_id + "_" + task_name));
-        }, function () {
-            //error event
-            $('#task_item_' + project_id + "_" + task_name).addClass('task-list__item_error');
+	p.stopTask = function(project_id, task_name)
+	{
+		spock.terminalManager.stopTask(project_id, task_name);
 
-            $('#task_item_' + project_id + "_" + task_name).removeClass('task-list__item_running');
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_terminal").hide();
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_stop").hide();
-            $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_run").show();
+		$('#task_item_' + project_id + "_" + task_name).removeClass('tasks-item_running');
+		$('#task_item_' + project_id + "_" + task_name).removeClass('tasks-item_error');
 
-        });
-    };
+		$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_terminal").hide();
+		$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_stop").hide();
+		$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_run").show();
 
+	};
 
-    /**
-     * 停止任务
-     * @param project_id
-     * @param task_name
-     */
-    TmTSpock.prototype.stopTask = function (project_id, task_name) {
-        spock.terminalManager.stopTask(project_id, task_name);
+	window.TmTSpock = TmTSpock;
 
-        $('#task_item_' + project_id + "_" + task_name).removeClass('task-list__item_running');
-        $('#task_item_' + project_id + "_" + task_name).removeClass('task-list__item_error');
-
-        $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_terminal").hide();
-        $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_stop").hide();
-        $('#task_item_' + project_id + "_" + task_name + " .task-list__action-item_run").show();
-
-    };
-
-    return TmTSpock;
 })();

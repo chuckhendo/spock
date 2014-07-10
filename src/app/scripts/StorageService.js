@@ -1,20 +1,26 @@
-var StorageService = (function () {
-    function StorageService() {
-    }
+(function(){
 
-    StorageService.prototype.setProjects = function (projects) {
-        localStorage.SpockData = JSON.stringify(projects);
-    };
+	var StorageService = function(){};
 
-    StorageService.prototype.getProjects = function () {
-        try {
-            var projects = JSON.parse(localStorage.SpockData || '[]');
-        } catch (e) {
-            window.alert('Error Reading Spock ! Reverting to defaults.');
-        }
+	var p = StorageService.prototype;
 
-        return projects || [];
-    };
+	p.setProjects = function (projects)
+	{
+		localStorage.SpockData = JSON.stringify(projects);
+	};
 
-    return StorageService;
+	p.getProjects = function()
+	{
+		try
+		{
+			var projects = JSON.parse(localStorage.SpockData || '[]');
+		} catch (e) {
+			window.alert('Error Reading Spock ! Reverting to defaults.');
+		}
+		
+		return projects || [];
+	};
+
+	window.StorageService = StorageService;
+	
 })();
