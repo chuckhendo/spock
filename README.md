@@ -1,15 +1,15 @@
 Spock
 ============
 
-A Grunt GUI Tool forked from [http://github.com/willerce/spock](@willerce).
+A Grunt GUI Tool forked from [@willerce](http://github.com/willerce/spock).
 
-![Spock App](http://s.willerce.com/lab/spock/spock.png)
+![Spock App](http://files.cloudkid.com/spock.png)
 
 Spock is a GUI frontend for Grunt. Unlike Koala and Prepros, Spock merely provides a graphic interface, without adding any extra functionality.
 
 Instead of Grunt's original command line interface, Spock's graphic interface helps the new Grunt users. We hope Spock can promote the usage of Grunt. 
 
-Download: [github.com/CloudKidStudio/spock/releases](here).
+Download release [here](http://github.com/CloudKidStudio/spock/releases).
 
 ##Getting started
 
