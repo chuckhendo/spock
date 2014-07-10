@@ -124,24 +124,25 @@ body {
 }
 
 ::-webkit-scrollbar {
-    height: 16px;
+    height: 12px;
     overflow: visible;
-    width: 16px
+    width: 12px;
 }
 
 ::-webkit-scrollbar-button {
     height: 0;
-    width: 0
+    width: 0;
 }
 
 ::-webkit-scrollbar-track {
     background-clip: padding-box;
     border: solid transparent;
-    border-width: 0 0 0 7px
+    border-width: 0 0 0 0;
+    background:#f5f5f5;
 }
 
 ::-webkit-scrollbar-track:horizontal {
-    border-width: 7px 0 0
+    border-width: 0 0 0
 }
 
 ::-webkit-scrollbar-track:hover {
@@ -151,7 +152,8 @@ body {
 
 ::-webkit-scrollbar-track:active {
     background-color: rgba(0, 0, 0, 0.02);
-    box-shadow: inset 1px -1px 0 rgba(0, 0, 0, 0.1), inset -1px 1px 0 rgba(0, 0, 0, 0.05)
+    box-shadow: inset 1px -1px 0 rgba(0, 0, 0, 0.1), inset -1px 1px 0 rgba(0, 0, 0, 0.05);
+    width:16px !important;
 }
 
 ::-webkit-scrollbar-track:horizontal:hover {
@@ -166,10 +168,10 @@ body {
     background-color: rgba(0, 0, 0, 0.2);
     background-clip: padding-box;
     border: solid transparent;
-    border-width: 0 0 0 7px;
+    border-width: 0;
     min-height: 20px;
     padding: 100px 0 0;
-    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.08), inset -1px -1px 0 rgba(0, 0, 0, 0.05)
+    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.08), inset -1px -1px 0 rgba(0, 0, 0, 0.05);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -178,7 +180,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-    border-width: 7px 0 0;
+    border-width: 0 0 0;
     padding: 0 0 0 100px;
     box-shadow: inset -1px 1px 0 rgba(0, 0, 0, 0.1), inset 1px -1px 0 rgba(0, 0, 0, 0.07)
 }
@@ -210,6 +212,15 @@ body {
     background: #313437;
 }
 
+.collapsed-sidebar .sidebar{
+    width:36px;
+}
+
+.collapsed-sidebar .sidebar__title,
+.collapsed-sidebar .sidebar__list {
+    display:none;
+}
+
 .sidebar__shadow {
     width: 12px;
     height: 100%;
@@ -226,7 +237,7 @@ body {
     line-height: 45px;
     text-transform: uppercase;
     text-indent: 15px;
-    font-weight: bold;
+    font-weight:bold;
 }
 
 .sidebar__list {
@@ -246,7 +257,7 @@ body {
 }
 
 .sidebar__item:hover {
-    background: #302F2F;
+    background: #262729;
 }
 
 .sidebar__item_current,
@@ -277,6 +288,29 @@ body {
 .sidebar__item:hover .controls {
     visibility: visible;
     opacity: 1;
+}
+
+.sidebar__button {
+    outline:0;
+    border:0;
+    background:transparent;
+    float:right;
+    padding:10px;
+    margin-top:4px;
+}
+.sidebar__button img {
+    width:16px;
+    height:16px;
+}
+
+.collapsed-sidebar .sidebar__button img.left,
+.sidebar__button img.right {
+    display:none;
+}
+
+.sidebar__button img.left,
+.collapsed-sidebar .sidebar__button img.right {
+    display:inline-block;
 }
 
 .controls {
@@ -312,6 +346,10 @@ body {
     overflow: hidden;
 }
 
+.collapsed-sidebar .task-tab {
+    margin-left:36px;
+}
+
 /************
  *  mod-task
  **************/
@@ -324,8 +362,7 @@ body {
     margin: 10px;
     box-shadow: 2px 2px 3px #d3d3d3;
     background: #fff;
-    height: 40px;
-    line-height: 40px;
+    padding: 10px 15px;
     font-size: 13px;
     position: relative;
     color: #7F7F7F;
@@ -349,15 +386,21 @@ body {
 
 .task-list__item-name {
     font-weight: bold;
-    padding-left: 15px;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.task-list__item-info {
+    font-size: 85%;
+    color: #C0C0C0;
+    display: block;
 }
 
 .task-list__actions {
     position: absolute;
     right: 0;
     top: 0;
-    height: 40px;
-    padding: 0 5px;
+    padding: 0 10px;
 }
 
 .task-list__action-item {
@@ -410,4 +453,11 @@ body {
     top: 0;
     left: 0;
     z-index: 999;
+}
+
+.icon-project {
+    width:16px;
+    height:16px;
+    vertical-align: text-top;
+    margin-right:5px;
 }

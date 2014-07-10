@@ -38,8 +38,17 @@ var ProjectManager = (function () {
 
             var tasks = [];
             _.each(grunt.task._tasks, function (task) {
-                tasks.push(task.name);
+                tasks.push({
+                    name: task.name,
+                    info: task.info.replace(/&/g, '&amp;') /* This MUST be the 1st replacement. */
+                        .replace(/'/g, '&apos;') /* The 4 other predefined entities, required. */
+                        .replace(/"/g, '&quot;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                });
             });
+
+            console.log(tasks);
 
             var project = {
                 id: project_id,

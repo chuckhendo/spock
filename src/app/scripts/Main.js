@@ -21,6 +21,7 @@ $(document).ready(function () {
     window.spock.app = new TmTSpock();
 
     var $body = $('body');
+    var $button = $('.sidebar__button');
 
     //项目切换
     $body.on('click', '.JS-Sidebar-Item', function () {
@@ -31,6 +32,11 @@ $(document).ready(function () {
     //移除项目
     $body.on('click', '.JS-Project-Remove', function () {
         spock.app.removeProject($(this).attr('data-id'));
+        return false;
+    });
+
+    $body.on('click', '.JS-Task-Toggle-Info', function() {
+        $(this).find('.task-list__item-info').toggle();
         return false;
     });
 
@@ -55,7 +61,6 @@ $(document).ready(function () {
         return false;
     });
 
-
     $body.on('click', '.JS-Task-Stop', function () {
         var project_id = $(this).attr('data-project-id');
         var task_name = $(this).attr('data-task-name');
@@ -63,11 +68,15 @@ $(document).ready(function () {
         return false;
     });
 
+    $button.click(function () {
+        $body.toggleClass('collapsed-sidebar');
+    });
+
     //监听文件、文件夹拖入事件
-    document.body.addEventListener('dragenter', handleDragEnter, false);
-    document.body.addEventListener('dragover', handleDragOver, false);
-    document.body.addEventListener('drop', handleDrop, false);
-    document.body.addEventListener('dragleave', handleDragLeave, false);
+    document.addEventListener('dragenter', handleDragEnter, false);
+    document.addEventListener('dragover', handleDragOver, false);
+    document.addEventListener('drop', handleDrop, false);
+    document.addEventListener('dragleave', handleDragLeave, false);
 
     // node-webkit 开发者工具
     window.addEventListener('keydown', function (e) {
