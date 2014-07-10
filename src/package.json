@@ -7,12 +7,14 @@
   "window": {
     "icon": "resource/icon512x512.png",
     "show": true,
-    "toolbar": true,
+    "toolbar": false,
     "frame": true,
     "position": "center",
     "width": 480,
     "height": 400,
-    "resizable": false
+    "min_width": 400,
+    "min_height": 200,
+    "resizable": true
   },
   "dependencies": {
     "MD5": "1.2.0",

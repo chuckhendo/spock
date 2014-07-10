@@ -95,12 +95,9 @@ a:hover {
 
 /** TmTool **/
 body {
-    width: 340px;
-    height: 400px;
-    min-width: 300px;
-    min-height: 400px;
-    position: relative;
-    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: #F5F6F8;
     -webkit-user-select: none;
 }
 
@@ -205,7 +202,7 @@ body {
 }
 
 .sidebar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 200px;
@@ -310,7 +307,6 @@ body {
  **************/
 .task-tab {
     background: #F5F6F8;
-    width: 280px;
     margin-left: 200px;
     height: 100%;
     overflow: hidden;
@@ -403,14 +399,14 @@ body {
     font-family: Menlo, Monaco, Consolas, "Lucida Console", "Courier New", "Microsoft Yahei", monospace;
     font-size: 12px;
     line-height: 1.4em;
-    height: 400px;
-    width: 480px;
+    height: 100%;
+    width: 100%;
     overflow-y: auto;
     padding: 10px;
     background: rgba(0, 0, 0, 0.85);
     color: #93A1A1;
     display: none;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 999;
