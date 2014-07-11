@@ -1,22 +1,52 @@
 (function(){
 
+	// Import node modules
+	var spawn = require("child_process").spawn;
+	var exec = require("child_process").exec;
+	
+	/**
+	*  Manage the terminal window
+	*  @class TerminalManager
+	*/
 	var TerminalManager = function()
 	{
+		/**
+		*  The command to use based on the platform, either grunt.cmd or grunt
+		*  @property {String} command
+		*/
 		this.command = (process.platform === 'win32') ? 'grunt.cmd' : 'grunt';
+
+		/**
+		*  The list of current processes by project id
+		*  @property {dict} process_list
+		*/
 		this.process_list = {};
 	};
 
+	// Reference to the prototype
 	var p = TerminalManager.prototype;
 
+	/**
+	*  Kill all the workers for all projects
+	*  @method killWorkers
+	*/
 	p.killWorkers = function()
 	{
 		var self = this;
-		_.forEach(self.process_list, function (project, project_id) {
-			self.killProjectWorkers(project_id);
-		});
+		_.forEach(self.process_list, 
+			function(project, project_id)
+			{
+				self.killProjectWorkers(project_id);
+			}
+		);
 	};
 
 
+	/**
+	*  Kill the project workers
+	*  @method killProjectWorkers
+	*  @param {String} project_id The unqiue project id
+	*/
 	p.killProjectWorkers = function(project_id) 
 	{
 		var self = this;
@@ -28,23 +58,35 @@
 			return;
 		}
 
-		_.forEach(project, function (task, task_name){
-			if (task.status == "running") {
-				self.killTask(project_id, task_name);
+		_.forEach(project, 
+			function(task, task_name)
+			{
+				if (task.status == "running") 
+				{
+					self.killTask(project_id, task_name);
+				}
 			}
-		});
+		);
 	};
 
 
-	p.runTask = function (project_id, task_name, startCb, endCb, errorCb) {
-
+	/**
+	*  Run a task
+	*  @method runTask
+	*  @param {String} project_id The unqiue project id
+	*  @param {String} task_name The name of the task
+	*  @param {Function} startCb The starting callback function
+	*  @param {Function} endCb The ending callback function
+	*  @param {Function} errorCb The error callback function
+	*/
+	p.runTask = function(project_id, task_name, startCb, endCb, errorCb) 
+	{
 		var project = spock.projectManager.getById(project_id);
 
 		startCb();
 
 		var terminal = spawn(this.command, [task_name], {cwd: project.path});
 
-		//如果这个
 		if (_.isUndefined(this.process_list[project_id]))
 		{
 			this.process_list[project_id] = {};
@@ -57,26 +99,41 @@
 		};
 
 		terminal.stdout.setEncoding('utf8');
-		terminal.stdout.on('data', function(data){
-			//console.log('=> ' + data);
-			//控制台输出
-			spock.app.putCliLog(data, project_id, task_name);
-		});
+		terminal.stdout.on(
+			'data', 
+			function(data)
+			{
+				spock.app.putCliLog(data, project_id, task_name);
+			}
+		);
 
-		terminal.stderr.on('data', function(data){
-			//console.log('ERROR: => ' + data);
-			spock.app.putCliLog(data, project_id, task_name);
-			errorCb();
-		});
+		terminal.stderr.on(
+			'data', 
+			function(data)
+			{
+				spock.app.putCliLog(data, project_id, task_name);
+				errorCb();
+			}
+		);
 
-		terminal.on('close', function(code){
-			endCb();
-			//console.log('child process exited with code ', code);
-			terminal.status = "stop";
-		});
+		terminal.on(
+			'close', 
+			function(code)
+			{
+				endCb();
+				//console.log('child process exited with code ', code);
+				terminal.status = "stop";
+			}
+		);
 	};
 
-	p.stopTask = function (project_id, task_name)
+	/**
+	*  Stop a task
+	*  @method stopTask
+	*  @param {String} project_id The unqiue project id
+	*  @param {String} task_name The name of the task
+	*/
+	p.stopTask = function(project_id, task_name)
 	{
 		if (!_.isUndefined(this.process_list[project_id]))
 		{
@@ -92,7 +149,13 @@
 		}
 	};
 
-	p.killTask = function (project_id, task_name)
+	/**
+	*  Kill a task
+	*  @method killTask
+	*  @param {String} project_id The unqiue project id
+	*  @param {String} task_name The name of the task
+	*/
+	p.killTask = function(project_id, task_name)
 	{
 		if (process.platform === 'win32')
 		{
@@ -105,6 +168,7 @@
 		}
 	};
 
+	// Assign to global space
 	window.TerminalManager = TerminalManager;
 	
 })();
