@@ -33,7 +33,7 @@
 	p.killWorkers = function()
 	{
 		var self = this;
-		_.forEach(self.process_list, 
+		_.forEach(self.process_list,
 			function(project, project_id)
 			{
 				self.killProjectWorkers(project_id);
@@ -47,7 +47,7 @@
 	*  @method killProjectWorkers
 	*  @param {String} project_id The unqiue project id
 	*/
-	p.killProjectWorkers = function(project_id) 
+	p.killProjectWorkers = function(project_id)
 	{
 		var self = this;
 
@@ -58,10 +58,10 @@
 			return;
 		}
 
-		_.forEach(project, 
+		_.forEach(project,
 			function(task, task_name)
 			{
-				if (task.status == "running") 
+				if (task.status === "running")
 				{
 					self.killTask(project_id, task_name);
 				}
@@ -79,7 +79,7 @@
 	*  @param {Function} endCb The ending callback function
 	*  @param {Function} errorCb The error callback function
 	*/
-	p.runTask = function(project_id, task_name, startCb, endCb, errorCb) 
+	p.runTask = function(project_id, task_name, startCb, endCb, errorCb)
 	{
 		var project = spock.projectManager.getById(project_id);
 
@@ -100,7 +100,7 @@
 
 		terminal.stdout.setEncoding('utf8');
 		terminal.stdout.on(
-			'data', 
+			'data',
 			function(data)
 			{
 				spock.app.putCliLog(data, project_id, task_name);
@@ -108,7 +108,7 @@
 		);
 
 		terminal.stderr.on(
-			'data', 
+			'data',
 			function(data)
 			{
 				spock.app.putCliLog(data, project_id, task_name);
@@ -117,7 +117,7 @@
 		);
 
 		terminal.on(
-			'close', 
+			'close',
 			function(code)
 			{
 				endCb();
@@ -140,11 +140,11 @@
 			try
 			{
 				this.killTask(project_id, task_name);
-				var pid = this.process_list[project_id][task_name].status = "stop"
+				var pid = this.process_list[project_id][task_name].status = "stop";
 			}
 			catch(e)
 			{
-				alert("process end error!")
+				alert("process end error!");
 			}
 		}
 	};
@@ -161,8 +161,8 @@
 		{
 			var pid = this.process_list[project_id][task_name].terminal.pid;
 			exec('taskkill /pid ' + pid + ' /T /F');
-		} 
-		else 
+		}
+		else
 		{
 			this.process_list[project_id][task_name].terminal.kill();
 		}

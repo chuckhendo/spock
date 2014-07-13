@@ -1,0 +1,14 @@
+{
+	"qualified-headings": true,
+	"unique-headings": false,
+	"known-properties": false,
+	"regex-selectors": false,
+	"unqualified-attributes": false,
+	"compatible-vendor-prefixes": false,
+	"vendor-prefix": false,
+	"fallback-colors": false,
+	"important": false,
+	"universal-selector": false,
+	"box-sizing": false,
+	"outline-none": false
+}

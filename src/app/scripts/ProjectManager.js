@@ -26,7 +26,7 @@
 	{
 		var exists = false;
 		_.each(
-			this.projects, 
+			this.projects,
 			function(project)
 			{
 				if (!path.relative(project.path, dir))
@@ -43,11 +43,8 @@
 			this.clear(exists.id);
 		}
 		// Create new project name and id for new projects
-		else
-		{
-			var projectName = path.basename(dir);
-			var projectId = Utils.uid(projectName);
-		}
+		var projectName = path.basename(dir);
+		var projectId = Utils.uid(projectName);
 
 		// Check for grunt within project
 		var gruntPath = dir + '/node_modules/grunt/';
@@ -72,7 +69,7 @@
 		global.require(gruntFile)(grunt);
 
 		var tasks = [];
-		_.each(grunt.task._tasks, 
+		_.each(grunt.task._tasks,
 			function(task)
 			{
 				tasks.push({
@@ -109,7 +106,7 @@
 			this.projects.push(project);
 			spock.settings.setProjects(this.projects);
 		}
-		return project;		
+		return project;
 	};
 
 	/**
@@ -165,7 +162,7 @@
 
 		// Removing from the list of projects
 		this.projects = _.reject(
-			this.projects, 
+			this.projects,
 			function(project)
 			{
 				return project.id === id;
@@ -188,10 +185,10 @@
 	p.getById = function(id)
 	{
 		return _.find(
-			spock.projectManager.projects, 
+			spock.projectManager.projects,
 			function(project)
 			{
-				return project.id == id;
+				return project.id === id;
 			}
 		);
 	};
@@ -205,10 +202,10 @@
 	p.getByPath = function(path)
 	{
 		return _.find(
-			spock.projectManager.projects, 
+			spock.projectManager.projects,
 			function(project)
 			{
-				return project.path == path;
+				return project.path === path;
 			}
 		);
 	};

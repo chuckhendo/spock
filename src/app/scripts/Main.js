@@ -19,8 +19,8 @@ $(function(){
 	var sidebarClass = 'collapsed-sidebar';
 
 	var body = $('body').on(
-		'click', 
-		'.JS-Sidebar-Item', 
+		'click',
+		'.JS-Sidebar-Item',
 		function()
 		{
 			spock.app.switchProject($(this).attr('data-id'));
@@ -28,8 +28,8 @@ $(function(){
 		}
 	)
 	.on(
-		'click', 
-		'.JS-Project-Remove', 
+		'click',
+		'.JS-Project-Remove',
 		function()
 		{
 			spock.app.removeProject($(this).attr('data-id'));
@@ -37,8 +37,8 @@ $(function(){
 		}
 	)
 	.on(
-		'click', 
-		'.JS-Task-Toggle-Info', 
+		'click',
+		'.JS-Task-Toggle-Info',
 		function()
 		{
 			$(this).find('.tasks-item-info').toggle();
@@ -46,8 +46,8 @@ $(function(){
 		}
 	)
 	.on(
-		'click', 
-		'.JS-Task-Run', 
+		'click',
+		'.JS-Task-Run',
 		function()
 		{
 			var project_id = $(this).attr('data-project-id');
@@ -57,8 +57,8 @@ $(function(){
 		}
 	)
 	.on(
-		'click', 
-		'.JS-Task-Terminal', 
+		'click',
+		'.JS-Task-Terminal',
 		function()
 		{
 			var project_id = $(this).attr('data-project-id');
@@ -74,8 +74,8 @@ $(function(){
 		}
 	)
 	.on(
-		'click', 
-		'.JS-Task-Stop', 
+		'click',
+		'.JS-Task-Stop',
 		function()
 		{
 			var project_id = $(this).attr('data-project-id');
@@ -113,7 +113,7 @@ $(function(){
 	});
 
 	$(document).on(
-		'dragover', 
+		'dragover',
 		function handleDragOver(event)
 		{
 			event.stopPropagation();
@@ -123,7 +123,7 @@ $(function(){
 		}
 	)
 	.on(
-		'drop', 
+		'drop',
 		function handleDrop(event)
 		{
 			event.stopPropagation();
@@ -137,11 +137,11 @@ $(function(){
 
 				var stats = fs.statSync(file.path);
 
-				if (stats.isDirectory() && path.dirname(file.path) !== file.path) 
+				if (stats.isDirectory() && path.dirname(file.path) !== file.path)
 				{
 					spock.app.addProject(file.path);
-				} 
-				else if (stats.isFile() && path.dirname(path.dirname(file.path)) !== path.dirname(file.path)) 
+				}
+				else if (stats.isFile() && path.dirname(path.dirname(file.path)) !== path.dirname(file.path))
 				{
 					spock.app.addProject(path.dirname(file.path));
 				}
@@ -151,18 +151,18 @@ $(function(){
 	);
 	
 	window.addEventListener(
-		'keydown', 
+		'keydown',
 		function(e)
 		{
 			if (e.keyIdentifier === 'F12')
 			{
 				winMain.showDevTools();
-			} 
+			}
 			else if (e.keyIdentifier === 'F5')
 			{
 				location.reload();
-			} 
-			else if (e.keyIdentifier === 'U+001B') 
+			}
+			else if (e.keyIdentifier === 'U+001B')
 			{
 				if (spock.temp.showConsoleId)
 				{
@@ -174,7 +174,7 @@ $(function(){
 	);
 
 	winMain.on(
-		'close', 
+		'close',
 		function()
 		{
 			spock.settings.saveWindow(winMain);

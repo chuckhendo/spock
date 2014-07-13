@@ -1,9 +1,14 @@
 {
-  "name": "Spock",
-  "description": "Spock Builder",
-  "version": "0.0.4",
-  "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-node-webkit-builder": "~0.1.17"
+	"name": "Spock",
+	"description": "Spock Builder",
+	"version": "0.0.4",
+	"devDependencies": {
+		"grunt": "~0.4.2",
+		"grunt-contrib-jshint": "~0.6.4",
+		"grunt-contrib-watch": "~0.5.3",
+		"grunt-contrib-csslint" : "*",
+		"load-grunt-tasks" : "*",
+		"grunt-newer" : "*",
+		"grunt-node-webkit-builder": "~0.1.17"
   }
 }

@@ -52,7 +52,7 @@
 		{
 			localStorage.SpockDataSidebar = JSON.stringify(collapsed);
 		}
-	})
+	});
 
 	/**
 	*  Load the window to the saved size
@@ -61,11 +61,12 @@
 	*/
 	p.loadWindow = function(win)
 	{
+		var rect;
 		try
 		{
-			var rect = JSON.parse(localStorage.SpockDataWindow || 'null');
-		} 
-		catch(e) 
+			rect = JSON.parse(localStorage.SpockDataWindow || 'null');
+		}
+		catch(e)
 		{
 			alert('Error Reading Spock Window! Reverting to defaults.');
 		}
@@ -95,11 +96,12 @@
 	*/
 	p.getProjects = function()
 	{
+		var projects;
 		try
 		{
-			var projects = JSON.parse(localStorage.SpockData || '[]');
-		} 
-		catch(e) 
+			projects = JSON.parse(localStorage.SpockData || '[]');
+		}
+		catch(e)
 		{
 			alert('Error Reading Spock ! Reverting to defaults.');
 		}

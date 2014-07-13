@@ -26,7 +26,7 @@
 			var foundActive = false;
 			var firstId;
 			_.each(
-				spock.projectManager.projects, 
+				spock.projectManager.projects,
 				function(project)
 				{
 					if (!firstId)
@@ -35,13 +35,13 @@
 					}
 					project = spock.projectManager.add(project.path);
 
-					if (project) 
+					if (project)
 					{
 						self.addProjectHTML(project);
 						self.watchProject(project.path);
 					}
 					lastId = project.id;
-					if (activeId && project.id == activeId)
+					if (activeId && project.id === activeId)
 					{
 						foundActive = true;
 					}
@@ -66,7 +66,7 @@
 	{
 		var project = spock.projectManager.add(dir);
 
-		if (project) 
+		if (project)
 		{
 			this.addProjectHTML(project);
 			this.switchProject(project.id);
@@ -83,7 +83,7 @@
 	{
 		var self = this;
 		watch(
-			path + "/Gruntfile.js", 
+			path + "/Gruntfile.js",
 			function()
 			{
 				var project = spock.projectManager.getByPath(path);
@@ -153,7 +153,7 @@
 
 		this.clearProject(id);
 
-		if ($('.sidebar-item_current').length == 0 && spock.projectManager.projects.length > 0)
+		if ($('.sidebar-item_current').length === 0 && spock.projectManager.projects.length > 0)
 		{
 			this.switchProject(spock.projectManager.projects[0].id);
 		}
@@ -205,7 +205,7 @@
 				$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_terminal").show();
 				$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_stop").show();
 				$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_run").hide();
-			}, 
+			},
 			function()
 			{
 				//end event
@@ -213,7 +213,7 @@
 				$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_terminal").hide();
 				$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_stop").hide();
 				$('#task_item_' + project_id + "_" + task_name + " .tasks-action-item_run").show();
-			}, 
+			},
 			function()
 			{
 				//error event

@@ -30,14 +30,14 @@
 		if (!Utils.templates[templateFileName])
 		{
 			var template = fs.readFileSync(
-				"./app/templates/" + templateFileName + ".html", 
+				"./app/templates/" + templateFileName + ".html",
 				{encoding: "utf-8"}
 			);
 
 			Utils.templates[templateFileName] = template;
 			return _.template(template)(obj);
-		} 
-		else 
+		}
+		else
 		{
 			return _.template(Utils.templates[templateFileName])(obj);
 		}
