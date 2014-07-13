@@ -8,12 +8,21 @@
 	*  The main application
 	*  @class Spock
 	*/
-	var Spock = function()
+	var Spock = function(){};
+
+	// Reference to the prototype
+	var p = Spock.prototype = {};
+
+	/**
+	*  Initalize the application, load any shaved projects
+	*  @method init
+	*/
+	p.init = function()
 	{
 		var self = this;
 		if (spock.projectManager.projects.length > 0)
 		{
-			var activeId = spock.storageService.activeProject;
+			var activeId = spock.settings.activeProject;
 			var foundActive = false;
 			var firstId;
 			_.each(
@@ -47,9 +56,6 @@
 			this.switchProject(activeId);
 		}
 	};
-
-	// Reference to the prototype
-	var p = Spock.prototype = {};
 
 	/**
 	*  Add a project to the list of projects
@@ -122,7 +128,7 @@
 		$('#tasks_' + id).show();
 
 		// Save the current project
-		spock.storageService.activeProject = id;
+		spock.settings.activeProject = id;
 	};
 
 	/**

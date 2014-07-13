@@ -2,12 +2,12 @@
 
 	/**
 	*  For storing and retrieving data
-	*  @class StorageService
+	*  @class Settings
 	*/
-	var StorageService = function(){};
+	var Settings = function(){};
 
 	// Reference to the prototype
-	var p = StorageService.prototype;
+	var p = Settings.prototype;
 
 	/**
 	*  Save the window settings
@@ -46,7 +46,7 @@
 	Object.defineProperty(p, "collapsedSidebar", {
 		get : function()
 		{
-			return JSON.parse(localStorage.SpockDataSidebar);
+			return JSON.parse(localStorage.SpockDataSidebar || "false");
 		},
 		set : function(collapsed)
 		{
@@ -107,6 +107,6 @@
 	};
 
 	// Assign to global space
-	window.StorageService = StorageService;
+	window.Settings = Settings;
 	
 })();

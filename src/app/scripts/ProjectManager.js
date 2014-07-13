@@ -10,7 +10,7 @@
 		*  The collection of currently loaded projects
 		*  @property {Array} projects
 		*/
-		this.projects = spock.storageService.getProjects();
+		this.projects = spock.settings.getProjects();
 	};
 
 	// The reference to the prototype
@@ -107,7 +107,7 @@
 
 			// Update the projects
 			this.projects.push(project);
-			spock.storageService.setProjects(this.projects);
+			spock.settings.setProjects(this.projects);
 		}
 		return project;		
 	};
@@ -151,7 +151,7 @@
 			projects.push(this.getById(ids[i]));
 		}
 		this.projects = projects;
-		spock.storageService.setProjects(this.projects);
+		spock.settings.setProjects(this.projects);
 	};
 
 	/**
@@ -173,7 +173,7 @@
 		);
 
 		// Update projects
-		spock.storageService.setProjects(this.projects);
+		spock.settings.setProjects(this.projects);
 
 		// Kill all project related tasks
 		spock.terminalManager.killProjectWorkers(id);

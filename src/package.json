@@ -6,7 +6,7 @@
   "single-instance": true,
   "window": {
     "icon": "resource/icon512x512.png",
-    "show": true,
+    "show": false,
     "toolbar": false,
     "frame": true,
     "position": "center",

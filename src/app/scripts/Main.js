@@ -11,7 +11,7 @@ $(function(){
 	//spock app
 	window.spock = {};
 	window.spock.temp = {};
-	window.spock.storageService = new StorageService();
+	window.spock.settings = new Settings();
 	window.spock.projectManager = new ProjectManager();
 	window.spock.terminalManager = new TerminalManager();
 	window.spock.app = new Spock();
@@ -92,10 +92,10 @@ $(function(){
 				.toggleClass(sidebarClass)
 				.hasClass(sidebarClass);
 
-			spock.storageService.collapsedSidebar = collapsed;
+			spock.settings.collapsedSidebar = collapsed;
 		}
 	);
-	if (spock.storageService.collapsedSidebar)
+	if (spock.settings.collapsedSidebar)
 	{
 		body.addClass(sidebarClass);
 	}
@@ -113,26 +113,13 @@ $(function(){
 	});
 
 	$(document).on(
-		'dragenter', 
-		function handleDragEnter(event)
-		{
-			//console.log("handleDragEnter");
-		}
-	)
-	.on(
-		'dragleave', 
-		function handleDragLeave()
-		{
-			//console.log("handleDragLeave");
-		}
-	)
-	.on(
 		'dragover', 
 		function handleDragOver(event)
 		{
 			event.stopPropagation();
 			event.preventDefault();
-			//console.log("handleDragOver");
+			console.log("handleDragOver");
+			//body.addClass('file-dropping');
 		}
 	)
 	.on(
@@ -142,6 +129,7 @@ $(function(){
 			event.stopPropagation();
 			event.preventDefault();
 			//console.log("handleDrop");
+			//body.removeClass('file-dropping');
 
 			var files = event.originalEvent.dataTransfer.files;
 
@@ -189,7 +177,7 @@ $(function(){
 		'close', 
 		function()
 		{
-			spock.storageService.saveWindow(winMain);
+			spock.settings.saveWindow(winMain);
 			spock.terminalManager.killWorkers();
 			gui.App.closeAllWindows();
 			gui.App.quit();
@@ -197,5 +185,9 @@ $(function(){
 	);
 
 	// Load the saved window size
-	spock.storageService.loadWindow(winMain);
+	spock.settings.loadWindow(winMain);
+
+	winMain.show();
+
+	spock.app.init();
 });

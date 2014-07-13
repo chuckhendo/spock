@@ -206,6 +206,7 @@ body {
     width: 200px;
     height: 100%;
     background: #313437;
+    transition:width 200ms ease;
 }
 
 .collapsed-sidebar .sidebar{
@@ -345,6 +346,7 @@ body {
     margin-left: 200px;
     height: 100%;
     overflow: hidden;
+    transition:margin-left 200ms ease;
 }
 
 .collapsed-sidebar .task-tab {
