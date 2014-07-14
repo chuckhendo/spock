@@ -12,11 +12,13 @@
 	/**
 	*  Save the window settings
 	*  @method saveWindow
-	*  @param {Window} win The GUI window object
+	*  @param {Window} win Node webkit window object
+	*  @param {Boolean} [isTerminal=false] If we're setting the terminal window 
 	*/
-	p.saveWindow = function(win)
+	p.saveWindow = function(win, isTerminal)
 	{
-		localStorage.SpockDataWindow = JSON.stringify({
+		var type = !!isTerminal ? 'SpockDataTerminalWindow' : 'SpockDataWindow';
+		localStorage[type] = JSON.stringify({
 			width : win.width,
 			height : win.height,
 			x : win.x,
@@ -58,13 +60,16 @@
 	*  Load the window to the saved size
 	*  @method loadWIndow
 	*  @param {Window} win The GUI window object
+	*  @param {Boolean} [isTerminal=false] If we're setting the terminal window 
 	*/
-	p.loadWindow = function(win)
+	p.loadWindow = function(win, isTerminal)
 	{
 		var rect;
+		var type = !!isTerminal ? 'SpockDataTerminalWindow' : 'SpockDataWindow';
+
 		try
 		{
-			rect = JSON.parse(localStorage.SpockDataWindow || 'null');
+			rect = JSON.parse(localStorage[type] || 'null');
 		}
 		catch(e)
 		{

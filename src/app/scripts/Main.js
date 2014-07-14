@@ -7,10 +7,10 @@ $(function(){
 	// Import node modules
 	var gui = require('nw.gui');
 	var winMain = gui.Window.get();
+	var terminal = null;
 
 	//spock app
 	window.spock = {};
-	window.spock.temp = {};
 	window.spock.settings = new Settings();
 	window.spock.projectManager = new ProjectManager();
 	window.spock.terminalManager = new TerminalManager();
@@ -59,17 +59,19 @@ $(function(){
 	.on(
 		'click',
 		'.JS-Task-Terminal',
-		function()
+		function(e)
 		{
-			var project_id = $(this).attr('data-project-id');
-			var task_name = $(this).attr('data-task-name');
-			$('#console_' + project_id + "_" + task_name).fadeIn();
+			var projectId = $(this).attr('data-project-id');
+			var taskName = $(this).attr('data-task-name');
 
-			//scroll to bottom
-			spock.app.terminalScrollToBottom(project_id, task_name);
-
-			spock.temp.showConsoleId = '#console_' + project_id + "_" + task_name;
-
+			if (!terminal)
+			{
+				terminal = new TerminalWindow(projectId, taskName);
+			}
+			else
+			{
+				terminal.open(projectId, taskName);
+			}
 			return false;
 		}
 	)
@@ -162,14 +164,6 @@ $(function(){
 			{
 				location.reload();
 			}
-			else if (e.keyIdentifier === 'U+001B')
-			{
-				if (spock.temp.showConsoleId)
-				{
-					$(spock.temp.showConsoleId).fadeOut();
-					spock.temp.showConsoleId = "";
-				}
-			}
 		}
 	);
 
@@ -177,6 +171,10 @@ $(function(){
 		'close',
 		function()
 		{
+			if (terminal)
+			{
+				terminal.destroy();
+			}
 			spock.settings.saveWindow(winMain);
 			spock.terminalManager.killWorkers();
 			gui.App.closeAllWindows();

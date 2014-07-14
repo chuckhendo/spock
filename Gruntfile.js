@@ -58,6 +58,6 @@ module.exports = function(grunt){
 	grunt.registerTask(
 		'default',
 		'Build the Spock application',
-		['nodewebkit']
+		['jshint', 'csslint', 'nodewebkit']
 	);
 };

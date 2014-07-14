@@ -1,0 +1,94 @@
+html {
+    font-size: 62.5%;
+    font-family: Tahoma,sans-serif;
+}
+
+/* Font sizing with rem http://snook.ca/archives/html_and_css/font-size-with-rem */
+/*body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input,button, textarea, p, blockquote, th, td, hr {margin: 0;padding: 0;}*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, input, button, textarea,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    line-height: 1.333;
+    font-size: 12px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%
+}
+
+input, textarea, select, button {
+    font-size: 12px;
+    font-weight: normal;
+    font-family: inherit;
+}
+
+input[type="button"], input[type="submit"], select, button {
+    cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+address, caption, cite, code, dfn, em, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+li {
+    list-style: none;
+}
+
+caption, th {
+    text-align: left;
+}
+
+q:before, q:after {
+    content: '';
+}
+
+abbr, acronym {
+    border: 0;
+    font-variant: normal;
+}
+
+sup {
+    vertical-align: text-top;
+}
+
+sub {
+    vertical-align: text-bottom;
+}
+
+fieldset, img, a img, iframe {
+    border-width: 0;
+    border-style: none;
+}
+
+textarea {
+    resize: vertical;
+    overflow-y: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

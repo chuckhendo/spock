@@ -1,6 +1,5 @@
 <div id="tasks_<%=id%>" data-id="<%=id%>" class="tasks">
 	<% for (var i = 0; i < tasks.length; i++ ) { %>
-	<!--tasks-item_running-->
 	<div id="task_item_<%=id%>_<%=tasks[i].name%>" class="tasks-item JS-Task-Toggle-Info" title="<%=tasks[i].info%>">
 		<span class="tasks-item-name"><%=tasks[i].name%></span>
 		<span class="tasks-item-info" style="display:none"><%=tasks[i].info%></span>
